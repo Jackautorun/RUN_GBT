@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info: {title: Polyglot Autobot, version: 1.0.0}
+servers: [{url: https://xxxx.trycloudflare.com}]
+paths:
+  /commands:
+    post:
+      security: [bearerAuth: []]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  enum: [train_model, eval_model, package_model, ping]
+                params:
+                  type: object
+                  properties:
+                    data: {type: string}
+                    model: {type: string}
+                    epochs: {type: integer}
+                    dataset: {type: string}
+                    out: {type: string}
+      responses: {"200": {description: ok}}
+  /status/{id}:
+    get:
+      security: [bearerAuth: []]
+      parameters: [{name: id, in: path, required: true, schema:{type:string}}]
+      responses: {"200": {description: ok}}
+components:
+  securitySchemes:
+    bearerAuth: {type: http, scheme: bearer}

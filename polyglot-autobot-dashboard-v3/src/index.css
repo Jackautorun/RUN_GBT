@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tokens */
+.btn{ @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-surface text-txt hover:bg-surface2 }
+.btn-primary{ @apply btn bg-brand text-white border-transparent hover:opacity-90 }
+.btn-secondary{ @apply btn bg-surface2 }
+.input{ @apply w-full p-2 rounded border border-border bg-surface text-txt }
+.h1{ @apply text-2xl font-bold } .h2{ @apply text-lg font-bold } .small{ @apply text-sm text-muted }
+.badge{ @apply inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs border }
+.badge-ok{ @apply badge bg-green-500/15 text-green-400 border-green-500/40 }
+.badge-err{ @apply badge bg-red-500/15 text-red-400 border-red-500/40 }
+.badge-warn{ @apply badge bg-yellow-500/15 text-yellow-400 border-yellow-500/40 }
+.card{ @apply bg-surface border border-border rounded-[14px] }
+.card-h{ @apply bg-surface2 border-b border-border rounded-t-[14px] }
+html,body,#root{ height:100% }

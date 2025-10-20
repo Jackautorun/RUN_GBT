@@ -1,0 +1,25 @@
+from azure.ai.inference import ChatCompletionsClient
+from azure.ai.inference.models import SystemMessage, UserMessage
+from azure.core.credentials import AzureKeyCredential
+import os
+
+endpoint = "https://models.inference.ai.azure.com"
+model = "gpt-4.1"          # หรือ "gpt-4.1-mini"
+token = "ghp_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+"
+
+client = ChatCompletionsClient(
+    endpoint=endpoint,
+    credential=AzureKeyCredential(token),
+)
+
+resp = client.complete(
+    messages=[
+        SystemMessage(content="You are a helpful assistant."),
+        UserMessage(content="ปักกิ่งเป็นเมืองหลวงของประเทศใด"),
+    ],
+    temperature=0.2,
+    top_p=1.0,
+    model=model,
+)
+
+print(resp.choices[0].message.content)

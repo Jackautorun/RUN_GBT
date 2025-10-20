@@ -1,0 +1,28 @@
+name: autorun-ci
+on:
+  push: { branches: ["main"] }
+  pull_request: { branches: ["main"] }
+  schedule: [{ cron: "0 3 * * *" }]
+concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect Node project
+        id: probe
+        run: |
+          if [ -f package.json ]; then echo "has_node=true" >> $GITHUB_OUTPUT; else echo "has_node=false" >> $GITHUB_OUTPUT; fi
+      - if: ${{ steps.probe.outputs.has_node == 'true' }}
+        name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - if: ${{ steps.probe.outputs.has_node == 'true' }}
+        run: npm ci
+      - if: ${{ steps.probe.outputs.has_node == 'true' }}
+        run: npm run lint --if-present
+      - if: ${{ steps.probe.outputs.has_node == 'true' }}
+        run: npm test --if-present -- --ci

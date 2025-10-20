@@ -1,0 +1,15 @@
+:root{
+  --bg:#F6F7FB; --surface:#FFFFFF; --surface-2:#F2F4F8; --border:#E1E4E9;
+  --txt:#1F2937; --muted:#64748B;
+  --brand:#6366F1; --ok:#10B981; --warn:#F59E0B; --err:#EF4444;
+  --focus:#2563EB;
+}
+:root.dark{
+  --bg:#12161C; --surface:#1A2028; --surface-2:#202733; --border:#3A4654;
+  --txt:#EBF1F7; --muted:#AAB8C5;
+  --brand:#7888F8; --ok:#22C55E; --warn:#F5C443; --err:#F87171;
+  --focus:#60A5FA;
+}
+.card{ background:var(--surface); border:1px solid var(--border); border-radius:14px }
+.card-h{ background:var(--surface-2); border-bottom:1px solid var(--border);
+  border-top-left-radius:14px; border-top-right-radius:14px }

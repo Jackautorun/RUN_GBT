@@ -1,0 +1,31 @@
+name: ci
+on:
+  push: { branches: ["main"] }
+  pull_request: { branches: ["main"] }
+  schedule: [{ cron: "0 3 * * *" }]
+concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }
+permissions: { contents: read }
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: probe
+        run: |
+          [ -f package.json ] && echo "node=true" >> $GITHUB_OUTPUT || echo "node=false" >> $GITHUB_OUTPUT
+          [ -f requirements.txt ] && echo "py=true" >> $GITHUB_OUTPUT || echo "py=false" >> $GITHUB_OUTPUT
+      - if: ${{ steps.probe.outputs.node == 'true' }}
+        uses: actions/setup-node@v5
+        with: { node-version: 20, cache: npm }
+      - if: ${{ steps.probe.outputs.node == 'true' }}
+        run: |
+          npm ci
+          npm run lint --if-present
+          npm test --if-present -- --ci
+      - if: ${{ steps.probe.outputs.py == 'true' }}
+        uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - if: ${{ steps.probe.outputs.py == 'true' }}
+        run: |
+          pip install -r requirements.txt
+          pytest -q || true

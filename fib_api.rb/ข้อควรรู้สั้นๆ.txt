@@ -1,0 +1,15 @@
+ข้อควรรู้สั้นๆ
+
+endpoint ต้องเป็น https://models.inference.ai.azure.com.
+
+ใส่ข้อความด้วย content= เสมอ.
+
+โทเคนต้องเป็น GitHub Fine-Grained PAT ที่เปิดสิทธิ์ models อ่าน.
+
+ดีบักกรณีพบบ่อย
+
+401/403: ตรวจ GITHUB_TOKEN ว่าตั้งค่าใน environment เดียวกับที่รันสคริปต์.
+
+404 model: ตรวจชื่อ model.
+
+Proxy/ไฟร์วอลล์: เปิดให้เรียกโดเมนข้างต้นผ่าน HTTPS.

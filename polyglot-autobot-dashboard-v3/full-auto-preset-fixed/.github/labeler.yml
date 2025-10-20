@@ -1,0 +1,9 @@
+ci:
+  - ".github/**"
+dependencies:
+  - "package.json"
+  - "package-lock.json"
+frontend:
+  - "src/**"
+backend:
+  - "server/**"

@@ -1,0 +1,17 @@
+# General build and dependency outputs
+node_modules/
+.venv/
+
+# Operating system and editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Archives and installers
+*.zip
+*.exe
+
+# Logs and runtime files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

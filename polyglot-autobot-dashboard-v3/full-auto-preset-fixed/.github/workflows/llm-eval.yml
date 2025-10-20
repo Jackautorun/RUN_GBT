@@ -1,0 +1,16 @@
+name: llm-eval
+on:
+  pull_request: { branches: ["main"] }
+  workflow_dispatch:
+permissions: { contents: read }
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with: { node-version: 20 }
+      - run: npx -y promptfoo@latest eval -c promptfooconfig.yaml --fail-on-error -o results.json
+        env: { OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }} }
+      - uses: actions/upload-artifact@v4
+        with: { name: promptfoo-results, path: results.json }

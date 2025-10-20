@@ -1,0 +1,18 @@
+appId: com.polyglot.autobot
+productName: Polyglot Autobot
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - electron/**
+  - server.js
+asar: true
+win:
+  target: nsis
+  icon: build/icon.ico
+nsis:
+  oneClick: true
+  perMachine: false
+  allowElevation: true
+  artifactName: "${productName}-Setup-${version}.exe"
