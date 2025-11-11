@@ -3,16 +3,28 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          # ตัด cache ออก เพื่อลบคำเตือน lockfile
+          # cache: npm
+
+      # แก้ปัญหา git+ssh -> ใช้ https แทน
+      - name: Force HTTPS for git dependencies
+        run: |
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global url."https://github.com/".insteadOf git@github.com:
+          git config --global url."https://".insteadOf "git+ssh://"
+
       - name: Install deps
         run: npm install --no-audit --no-fund
+
       - name: Run tests
         run: npm test
