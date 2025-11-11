@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          # ไม่เปิด cache ถ้ายังไม่มี lockfile
+          cache: npm           # ใช้แคชจาก package-lock.json
 
       - name: Force HTTPS for any git deps (best-effort)
         run: |
@@ -21,7 +21,7 @@ jobs:
           git config --global url."https://".insteadOf "git+ssh://" || true
 
       - name: Install deps
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Run tests
         run: npm test
