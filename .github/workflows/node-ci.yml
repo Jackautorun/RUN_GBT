@@ -1,3 +1,4 @@
+# .github/workflows/node-ci.yml
 name: node-ci
 on:
   push:
@@ -13,15 +14,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          # ตัด cache ออก เพื่อลบคำเตือน lockfile
-          # cache: npm
+          # cache: npm   # เอาออกเพื่อตัดคำเตือน lockfile
 
-      # แก้ปัญหา git+ssh -> ใช้ https แทน
-      - name: Force HTTPS for git dependencies
+      - name: Force HTTPS for any git deps (best-effort)
         run: |
-          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-          git config --global url."https://github.com/".insteadOf git@github.com:
-          git config --global url."https://".insteadOf "git+ssh://"
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/ || true
+          git config --global url."https://github.com/".insteadOf git@github.com: || true
+          git config --global url."https://".insteadOf "git+ssh://" || true
 
       - name: Install deps
         run: npm install --no-audit --no-fund
