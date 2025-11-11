@@ -1,7 +1,5 @@
-# .github/workflows/node-ci.yml
 name: node-ci
 on:
-  push:
   pull_request:
   workflow_dispatch:
 
@@ -14,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache: npm   # เอาออกเพื่อตัดคำเตือน lockfile
+          # ไม่เปิด cache ถ้ายังไม่มี lockfile
 
       - name: Force HTTPS for any git deps (best-effort)
         run: |
